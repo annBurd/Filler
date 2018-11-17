@@ -4,7 +4,7 @@ project(Filler C)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Ipthreads")
 set(SOURCE_FILES
-        src/main.c)
+        src/filler.c src/board_support.c src/usage.c)
 
 include_directories(inc)
 link_directories(libft)
