@@ -24,7 +24,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 
 HEADER = $(wildcard $(INC_DIR)*.h)
 
-SRC = main.c
+SRC = filler.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
