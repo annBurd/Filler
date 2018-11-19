@@ -6,7 +6,7 @@
 #    By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/27 19:02:29 by aburdeni          #+#    #+#              #
-#    Updated: 2018/11/16 21:28:53 by aburdeni         ###   ########.fr        #
+#    Updated: 2018/11/19 18:03:26 by aburdeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ PRF_SRC = ft_printf.c \
 	pr_join.c \
 	pr_utoa.c
 
-SRC = ft_atoi.c \
+SRC = ft_arraystrfree.c \
+    ft_atoi.c \
 	ft_atoi_base.c \
 	ft_bzero.c \
 	ft_getline.c \

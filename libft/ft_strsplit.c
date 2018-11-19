@@ -6,24 +6,13 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 20:20:36 by aburdeni          #+#    #+#             */
-/*   Updated: 2017/11/28 20:20:39 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/19 17:59:39 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/libft.h"
 
-static void		*ft_strarfree(char **str)
-{
-	while (*str)
-	{
-		free(&str);
-		str++;
-	}
-	free(str);
-	return (NULL);
-}
-
-static size_t	ft_strarlen(char const *s, char c)
+static size_t	line_len(char const *s, char c)
 {
 	size_t	line;
 
@@ -41,7 +30,7 @@ char			**ft_strsplit(char const *s, char c)
 	size_t	line;
 
 	if (!s || !c ||
-		!(array = (char**)malloc(sizeof(char*) * (ft_strarlen(s, c) + 1))))
+		!(array = (char**)malloc(sizeof(char*) * (line_len(s, c) + 1))))
 		return (NULL);
 	n = 0;
 	line = 0;
@@ -52,7 +41,7 @@ char			**ft_strsplit(char const *s, char c)
 		if (*(s - 1) != c && (*s == c || *s == 0))
 		{
 			if (!(array[line] = ft_strnew(n + 1)))
-				return (ft_strarfree(array));
+				return (ft_arraystrfree(array));
 			array[line] = ft_strncpy(array[line], (s - n), n);
 			n = 0;
 			line++;
