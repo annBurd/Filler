@@ -29,6 +29,7 @@ typedef struct	s_flag
 	char 		*file;	//use a map file (required)
 	size_t		s;		//use the seed number (initialization random) (man srand)
 }				t_flag;
+	size_t		n; //lines
 
 typedef struct	s_filler
 {
