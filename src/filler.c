@@ -12,7 +12,9 @@
 
 #include "../inc/filler.h"
 
-static void	usage(void)
+t_f	f;
+
+static void	show_usage(void)
 {
 	ft_printf("Usage: "
 	"./filler_vm -f path [-i | -p1 path | -p2 path] [-s | -q | -t time]\n\n"
@@ -24,6 +26,7 @@ static void	usage(void)
 	"\t-f  --file\t\tuse a map file (required)\n"
 	"\t-s  --seed\t\tuse the seed number (initialization random) (man srand)"
 	"\n");
+	exit(EXIT_FAILURE);
 }
 
 /*
@@ -33,51 +36,48 @@ static void	usage(void)
 ** bad player
 */
 
-int		fillit_exit(int code, void *p)
+int		f_exit(int code)
 {
 	if (code < 0)
 	{
 		perror("error:\n");
-		p && ft_arraystrfree(p);
-		exit(EXIT_FAILURE);
 	}
-	return (0);
+	exit(code);
 }
 
-static void	handle_flags(t_filler *main, char **arg)
+static void	handle_flags(/*t_filler *main,*/ char **arg)
 {
-	int i;
+	// int i;
 
-	i = 0;
-	main->p1 = NULL;
-	main->p2 = NULL;
-	while (arg[i] && arg[i][0] == '-')
+	// i = 0;
+	f.p1 = NULL;
+	f.p2 = NULL;
+	while (*arg/* && arg[i][0] == '-'*/)
 	{
-		if (ft_strequ(arg[i], "-t"))
-			main->time = (size_t)ft_atoi(arg[++i]);
-		else if (ft_strequ(arg[i], "-q"))
-			main->q = 1;
-		else if (ft_strequ(arg[i], "-i")) //(default)
-			main->i = 1;
-		else if (ft_strequ(arg[i], "-p1"))
-			main->p1 = arg[++i];
-		else if (ft_strequ(arg[i], "-p2"))
-			main->p2 = arg[++i];
-		else if (ft_strequ(arg[i], "-f")) //(required)
-			get_board(&main->b, arg[++i]);
-		else if (ft_strequ(arg[i], "-s"))
-			main->s = 123; //here must be random (man srand)
+		if (ft_strequ(*arg, "-t"))
+			f.t = (size_t)ft_atoi(*(++arg));
+		else if (ft_strequ(*arg, "-q"))
+			f.q = 1;
+		else if (ft_strequ(*arg, "-i")) //(default)
+			f.i = 1;
+		else if (ft_strequ(*arg, "-p1"))
+			f.p1 = *(++arg);
+		else if (ft_strequ(*arg, "-p2"))
+			f.p2 = *(++arg);
+		else if (ft_strequ(*arg, "-f")) //(required)
+			get_board(/*&main->b,*/ *(++arg));
+		else if (ft_strequ(*arg, "-s"))
+			f.s = 123; //here must be random (man srand)
 //		else
 			//error for unexist flag?
-			i++;
+			arg++;
+			// i++;
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_filler	main;
-
-	argc == 1 ? usage() : handle_flags(&main, ++argv);
+	argc == 1 ? show_usage() : handle_flags(/*&main,*/ ++argv);
 
 	ft_printf(RED"Filler's end\n"RESET);
 	return (0);

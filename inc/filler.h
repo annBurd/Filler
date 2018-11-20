@@ -25,7 +25,7 @@ typedef struct	s_board
 	char 		*columnLine;
 }				t_board;
 
-typedef struct	s_filler
+typedef struct	s_f
 {
 	t_board		b;
 	char 		*p1;
@@ -36,7 +36,7 @@ typedef struct	s_filler
 	size_t		s;	//use the seed number (initialization random) (man srand)
 	size_t		score1;
 	size_t		score2;
-}				t_filler;
+}				t_f;
 
 typedef struct	s_ox //additional
 {
@@ -45,10 +45,12 @@ typedef struct	s_ox //additional
 	size_t		len;
 }				t_ox;
 
-int		fillit_exit(int code, void *p);
-void	get_board(t_board *b, char *s);
+extern t_f	f;
 
-void	board_crate(t_filler *b);
-void	board_print(t_filler *b);
+int		filler_exit(int code/*, void *p*/);
+void	get_board(/*t_board *b,*/ char *s);
+
+void	board_crate(/*t_filler *b*/);
+void	board_print(/*t_filler *b*/);
 
 #endif

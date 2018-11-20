@@ -12,6 +12,8 @@
 
 #include "../inc/filler.h"
 
+t_f	f;
+
 static int 	valid_line(t_ox *ox, const char *s)
 {
 	while(*s)
@@ -53,7 +55,7 @@ static char	*generate_columnLine(size_t size)
 	return (fresh);
 }
 
-void		get_board(t_board *b, char *s)
+void		get_board(/*t_board *b,*/ char *s)
 {
 	char 	*line;
 	int 	fd;
