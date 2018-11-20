@@ -37,7 +37,7 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
-void			*ft_arraystrfree(char **str);
+void			ft_arraystrfree(char **array);
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);

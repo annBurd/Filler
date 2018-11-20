@@ -12,13 +12,16 @@
 
 #include "../inc/libft.h"
 
-void		*ft_arraystrfree(char **str)
+void		ft_arraystrfree(char **array)
 {
-	while (*str)
+	size_t	i;
+
+	i = 0;
+	while (array[i])
 	{
-		free(&str);
-		str++;
+		free(array[i]);
+		i++;
 	}
-	free(str);
-	return (NULL);
+	free(array);
+	array = NULL;
 }
