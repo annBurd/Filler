@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/21 18:44:50 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 20:09:35 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,11 @@ static void	show_usage(void)
 
 int			f_exit(int code)
 {
-	if (!code)
-	{
-		ft_arraystrfree(f.board);
-//		ft_arraystrfree(f.piece); //free after usage
-		free(f.xLine);
-	}
-	else if (code < 0)
+//	if (code < 0)
 		perror("error:\n");
 	//free memory depending on code
+	if (f.board)
+		ft_arraystrfree(f.board);
 	exit(code);
 }
 
@@ -72,7 +68,7 @@ static void	handle_flags(char **arg)
 			f.seed = (size_t)rand();
 		else
 			break ;//error for unexist flag? ignor?
-			arg++;
+		arg++;
 	}
 	print_board();// del me
 }
@@ -80,7 +76,8 @@ static void	handle_flags(char **arg)
 int			main(int argc, char **argv)
 {
 	argc == 1 ? show_usage() : handle_flags(++argv);
-
+	start_game();
 	ft_printf(RED"Filler's end\n"RESET);
+	ft_arraystrfree(f.board);
 	return (0);
 }

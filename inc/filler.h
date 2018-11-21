@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/21 18:37:34 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 20:30:40 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 // #include "color.h"
 #include <time.h>
 
+#define SHOW_MAP (f.quietMode && !f.interactiveMode)
+
 typedef struct	s_f
 {
 	char		**board;
@@ -25,10 +27,11 @@ typedef struct	s_f
 	size_t		x; //column;
 	char 		*xLine;
 	char		**piece;
+	size_t		dot[2];
 	char 		*p1;
 	char 		*p2;
-	short		interactiveMode;	//default
-	short		quietMode;
+	size_t		interactiveMode;	//default
+	size_t		quietMode;
 	size_t		time;
 	size_t		seed;	//use the seed number (initialization random) (man srand)
 	size_t		score1;
@@ -37,11 +40,8 @@ typedef struct	s_f
 
 typedef struct	s_ox //additional
 {
-	char		o;
-	char		x;
-	size_t		len;
-	int 		fd0;
-	int 		fd1;
+	short		o;
+	short		x;
 }				t_ox;
 
 extern t_f		f;
@@ -50,5 +50,6 @@ int				f_exit(int code);
 void			get_board(char *s);
 void			print_board();
 void			get_piece();
+void			start_game();
 
 #endif
