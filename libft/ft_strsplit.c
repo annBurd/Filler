@@ -12,15 +12,19 @@
 
 #include "../inc/libft.h"
 
-static size_t	line_len(char const *s, char c)
+static char	**get_array(char const *s, char c)
 {
 	size_t	line;
+	char 	**fresh;
 
 	line = 0;
 	while (*(s++))
 		if (*(s - 1) != c && (*s == c || *s == 0))
 			line++;
-	return (line);
+	if (!(fresh = (char**)malloc(sizeof(char*) * (line + 1))))
+		return (NULL);
+	fresh[line] = 0;
+	return (fresh);
 }
 
 char			**ft_strsplit(char const *s, char c)
@@ -29,8 +33,7 @@ char			**ft_strsplit(char const *s, char c)
 	size_t	n;
 	size_t	line;
 
-	if (!s || !c ||
-		!(array = (char**)malloc(sizeof(char*) * (line_len(s, c) + 1))))
+	if (!s || !c || !(array = get_array(s, c)))
 		return (NULL);
 	n = 0;
 	line = 0;
@@ -41,12 +44,14 @@ char			**ft_strsplit(char const *s, char c)
 		if (*(s - 1) != c && (*s == c || *s == 0))
 		{
 			if (!(array[line] = ft_strnew(n + 1)))
-				return (ft_arraystrfree(array));
+			{
+				ft_arraystrfree(array);
+				break ;
+			}
 			array[line] = ft_strncpy(array[line], (s - n), n);
 			n = 0;
 			line++;
 		}
 	}
-	array[line] = (char*)0;
 	return (array);
 }
