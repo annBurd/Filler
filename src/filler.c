@@ -6,13 +6,11 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/19 19:26:33 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 16:50:23 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
-
-t_f	f;
 
 static void	show_usage(void)
 {
@@ -36,16 +34,25 @@ static void	show_usage(void)
 ** bad player
 */
 
-int		f_exit(int code)
+int			f_exit(int code)
 {
-	if (code < 0)
+	if (!code)
 	{
-		perror("error:\n");
+		ft_arraystrfree(f.board);
+//		ft_arraystrfree(f.piece); //free after usage
+		free(f.xLine);
 	}
+	else if (code < 0)
+		perror("error:\n");
+	//free memory depending on code
 	exit(code);
 }
 
-static void	handle_flags(/*t_filler *main,*/ char **arg)
+
+//get piece
+//output piece
+
+static void	handle_flags(char **arg)
 {
 	// int i;
 
@@ -75,9 +82,9 @@ static void	handle_flags(/*t_filler *main,*/ char **arg)
 	}
 }
 
-int	main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
-	argc == 1 ? show_usage() : handle_flags(/*&main,*/ ++argv);
+	argc == 1 ? show_usage() : handle_flags(++argv);
 
 	ft_printf(RED"Filler's end\n"RESET);
 	return (0);

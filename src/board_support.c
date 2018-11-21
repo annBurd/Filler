@@ -6,15 +6,13 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:00:35 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/19 19:49:11 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 17:42:24 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
 
-t_f	f;
-
-static int 	valid_line(t_ox *ox, const char *s)
+static int	valid_line(t_ox *ox, const char *s)
 {
 	while(*s)
 	{
@@ -39,60 +37,67 @@ static int 	valid_line(t_ox *ox, const char *s)
 	return (1);
 }
 
-static char	*generate_columnLine(size_t size)
+static void	generate_columnLine()
 {
-	char	*fresh;
 	size_t	i;
 
-	fresh = (char*)malloc(sizeof(char) * (size));
-	fresh[size] = 0;
+	f.xLine = (char*)malloc(sizeof(char) * (f.x));
+	f.xLine[f.x] = 0;
 	i = 0;
-	while (i < size)
+	while (i < f.x)
 	{
-		fresh[i] = (char)(i % 10 + '0');
+		f.xLine[i] = (char)(i % 10 + '0');
 		i++;
 	}
-	return (fresh);
 }
 
-void		get_board(/*t_board *b,*/ char *s)
+void		get_board(char *s)
 {
 	char 	*line;
 	int 	fd;
 	size_t	i;
 	t_ox	ox;
 
-	b->n = 0;
-	(fd = open(s, O_RDONLY)) < 0 && fillit_exit(-1, NULL);
+	f.n = 0;
+	(fd = open(s, O_RDONLY)) < 0 && f_exit(-1);
 	while (ft_getline(fd, &line) > 0)
-		b->n++;
-	close(fd);
-	b->board = (char**)malloc(sizeof(char*) * b->n);
-	fd = open(s, O_RDONLY);
+		f.n++;
+	close(fd) && (fd = open(s, O_RDONLY));
+	f.board = (char**)malloc(sizeof(char*) * f.n);
 	i = 0;
-	b->x = 0;
+	f.x = 0;
 	ft_bzero(&ox, sizeof(ox));
 	while (ft_getline(fd, &line) > 0)
 	{
-		b->x ? (ox.len = ft_strlen(line)) : (b->x = ft_strlen(line));
-		ox.len != b->x && !valid_line(&ox, line) && fillit_exit(-2, &b->board);
-		b->board[i] = ft_strcpy((char*)malloc(sizeof(char) * b->x), line);
+		!f.x && (f.x = ft_strlen(line));
+		ox.len = ft_strlen(line);
+		(ox.len != f.x || !valid_line(&ox, line)) && f_exit(-2);
+		f.board[i] = ft_strcpy((char*)malloc(sizeof(char) * f.x), line);
 		i++;
 	}
 	close(fd);
-	b->columnLine = generate_columnLine(b->x);
+	generate_columnLine();
 }
 
-void	board_print(t_board *b)
+static void	print_piece(size_t n, size_t x)
 {
 	size_t	i;
 
 	i = 0;
-	ft_printf("    %s\n", b->columnLine);
-	while (i < b->n)
-	{
-		ft_printf("%03zu %s\n", i, b->board[i]);
-		i++;
-	}
-	//output Piece
+	ft_printf("Piece %zu %zu:", n, x);
+	while (i < n && f.piece[i])
+		write(1, f.piece[i++], x);
+}
+
+void		get_piece()
+{
+	size_t	n;
+
+	n = 0;
+	f.piece = (char**)malloc(sizeof(char*) * f.n);
+	ft_bzero(&f.piece, sizeof(f.piece));
+	while (ft_getline(0, &f.piece[n]) > 0)
+		n++;
+	if (f.q && !f.i)
+		print_piece(n, ft_strlen(f.piece[0]));
 }

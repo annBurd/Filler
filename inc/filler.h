@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/19 19:48:33 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 17:16:38 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@
 // #include "libft.h"
 // #include "color.h"
 
-typedef struct	s_board
+typedef struct	s_f
 {
 	char		**board;
 	size_t		n; //lines
 	size_t		x; //column;
-	char 		*columnLine;
-}				t_board;
-
-typedef struct	s_f
-{
-	t_board		b;
+	char 		*xLine;
+	char		**piece;
 	char 		*p1;
 	char 		*p2;
 	short		i;	//interactive mode(default)
@@ -45,12 +41,11 @@ typedef struct	s_ox //additional
 	size_t		len;
 }				t_ox;
 
-extern t_f	f;
+extern t_f		f;
 
-int		filler_exit(int code/*, void *p*/);
-void	get_board(/*t_board *b,*/ char *s);
-
-void	board_crate(/*t_filler *b*/);
-void	board_print(/*t_filler *b*/);
+int				f_exit(int code);
+void			get_board(char *s);
+void			print_board();
+void			get_piece();
 
 #endif
