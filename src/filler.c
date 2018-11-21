@@ -6,11 +6,13 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/21 16:50:23 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 18:44:50 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
+
+t_f			f;
 
 static void	show_usage(void)
 {
@@ -48,38 +50,31 @@ int			f_exit(int code)
 	exit(code);
 }
 
-
-//get piece
-//output piece
-
 static void	handle_flags(char **arg)
 {
-	// int i;
-
-	// i = 0;
-	f.p1 = NULL;
-	f.p2 = NULL;
-	while (*arg/* && arg[i][0] == '-'*/)
+	srand((unsigned)time(0));
+	ft_bzero(&f, sizeof(t_f));
+	while (*arg)
 	{
 		if (ft_strequ(*arg, "-t"))
-			f.t = (size_t)ft_atoi(*(++arg));
+			f.time = (size_t)ft_atoi(*(++arg));
 		else if (ft_strequ(*arg, "-q"))
-			f.q = 1;
+			f.quietMode = 1;
 		else if (ft_strequ(*arg, "-i")) //(default)
-			f.i = 1;
+			f.interactiveMode = 1;
 		else if (ft_strequ(*arg, "-p1"))
 			f.p1 = *(++arg);
 		else if (ft_strequ(*arg, "-p2"))
 			f.p2 = *(++arg);
 		else if (ft_strequ(*arg, "-f")) //(required)
-			get_board(/*&main->b,*/ *(++arg));
+			get_board(*(++arg));
 		else if (ft_strequ(*arg, "-s"))
-			f.s = 123; //here must be random (man srand)
-//		else
-			//error for unexist flag?
+			f.seed = (size_t)rand();
+		else
+			break ;//error for unexist flag? ignor?
 			arg++;
-			// i++;
 	}
+	print_board();// del me
 }
 
 int			main(int argc, char **argv)

@@ -6,11 +6,13 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:00:35 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/21 17:42:24 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 18:31:53 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
+
+t_f			f;
 
 static int	valid_line(t_ox *ox, const char *s)
 {
@@ -54,28 +56,26 @@ static void	generate_columnLine()
 void		get_board(char *s)
 {
 	char 	*line;
-	int 	fd;
 	size_t	i;
 	t_ox	ox;
 
-	f.n = 0;
-	(fd = open(s, O_RDONLY)) < 0 && f_exit(-1);
-	while (ft_getline(fd, &line) > 0)
+	ft_bzero(&ox, sizeof(ox));
+	(ox.fd0 = open(s, O_RDONLY)) < 0 && f_exit(-1);
+	while (ft_getline(ox.fd0, &line) > 0)
 		f.n++;
-	close(fd) && (fd = open(s, O_RDONLY));
+	(ox.fd1 = open(s, O_RDONLY)) < 0 && f_exit(-1);
 	f.board = (char**)malloc(sizeof(char*) * f.n);
 	i = 0;
-	f.x = 0;
-	ft_bzero(&ox, sizeof(ox));
-	while (ft_getline(fd, &line) > 0)
+	while (ft_getline(ox.fd1, &f.board[i]) > 0)
 	{
-		!f.x && (f.x = ft_strlen(line));
-		ox.len = ft_strlen(line);
-		(ox.len != f.x || !valid_line(&ox, line)) && f_exit(-2);
-		f.board[i] = ft_strcpy((char*)malloc(sizeof(char) * f.x), line);
+		!f.x && (f.x = ft_strlen(f.board[0]));
+		ox.len = ft_strlen(f.board[i]);
+		(ox.len != f.x || !valid_line(&ox, f.board[i])) && f_exit(-2);
 		i++;
 	}
-	close(fd);
+	close(ox.fd0);
+	close(ox.fd1);
+	!(ox.o && ox.x) && f_exit(-2);
 	generate_columnLine();
 }
 
@@ -98,6 +98,6 @@ void		get_piece()
 	ft_bzero(&f.piece, sizeof(f.piece));
 	while (ft_getline(0, &f.piece[n]) > 0)
 		n++;
-	if (f.q && !f.i)
+	if (f.quietMode && !f.interactiveMode)
 		print_piece(n, ft_strlen(f.piece[0]));
 }
