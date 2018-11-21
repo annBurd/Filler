@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrayfree.c                                     :+:      :+:    :+:   */
+/*   ft_arraystrnew.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 17:59:47 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/19 17:59:47 by aburdeni         ###   ########.fr       */
+/*   Created: 2018/11/21 19:43:22 by aburdeni          #+#    #+#             */
+/*   Updated: 2018/11/21 19:43:22 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/libft.h"
 
-void	ft_arraystrfree(char **array)
+char **ft_arraystrnew(size_t size)
 {
-	size_t	i;
+	char **fresh;
 
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-	array = NULL;
+	fresh = (char**)malloc(sizeof(char*) * (size + 1));
+	ft_bzero(&fresh, sizeof(fresh));
+	return (fresh);
 }

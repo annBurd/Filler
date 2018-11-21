@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:00:35 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/21 18:31:53 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/21 18:53:46 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		get_board(char *s)
 	while (ft_getline(ox.fd0, &line) > 0)
 		f.n++;
 	(ox.fd1 = open(s, O_RDONLY)) < 0 && f_exit(-1);
-	f.board = (char**)malloc(sizeof(char*) * f.n);
+	f.board = ft_arraystrnew(f.n);
 	i = 0;
 	while (ft_getline(ox.fd1, &f.board[i]) > 0)
 	{
