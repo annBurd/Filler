@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/23 19:04:21 by aburdeni         ###   ########.fr       */
+/*   update_boardd: 2018/11/23 22:16:57 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,81 +14,108 @@
 
 t_f			f;
 
-static void	set_token_dot_start(size_t i, size_t j)
+static size_t	get_token_begin_n(void)
 {
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
 	while (i < f.tn)
 	{
 		j &= 0;
 		while (j < f.tx)
-			if (f.token[i][j++] == '*')
-			{
-				f.t[0] = i;
-				break ;
-			}
+			if (f.token[i][j] == '*')
+				return (i);
+			else
+				j++;
 		i++;
 	}
-	j &= 0;
+	return (0);
+}
+
+static size_t	get_token_begin_x(void)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
 	while (j < f.tx)
 	{
 		i &= 0;
 		while (i < f.tn)
-			if (f.token[i++][j] == '*')
-			{
-				f.t[1] = j;
-				break ;
-			}
+			if (f.token[i][j] == '*')
+				return (j);
+			else
+				i++;
 		j++;
 	}
+	return (0);
 }
 
-static void	get_token(char *line, size_t i)
+static char	**get_array(const char *s, size_t *n, size_t *x)
 {
-	f.tn = (size_t)ft_atoi(line + 6);
-	f.tx = (size_t)ft_atoi(line + 7 + ft_nbrlen(f.tn, 10));
-	f.token = ft_arraystrnew(f.tn);
-	while (ft_getline(0, &line) > 0 && i < f.tn)
-		f.token[i++] = ft_strcpy(ft_strnew(f.tx), line);
-	set_token_dot_start(0, 0);
+	char	**fresh;
+	size_t	i;
+
+	i = 0;
+	while (s[i] && !ft_isdigit(s[i]))
+		i++;
+	while (s[i] && s[i] != ' ')
+		*n = *n * 10 + s[i++] - '0';
+	i++;
+	while (s[i] && s[i] != ':')
+		*x = *x * 10 + s[i++] - '0';
+	fresh = (char**)malloc(sizeof(char*) * (*n + 1));
+	fresh[*n] = 0;
+	return (fresh);
 }
 
-static void	get_info(size_t i)
+static void	update_board(char *line, size_t i)
 {
-	static char	*line;
-
 	if (!f.board)
 	{
-		while (ft_getline(0, &line) > 0 && line[0] != 'P')
-			if (ft_strstr(line, "aburdeni.filler"))
+		while (ft_getline(0, &line) > 0 && !ft_strstr(line, "Plateau"))
+			if (ft_strstr(line, "exec") && ft_strstr(line, "aburdeni.filler"))
 			{
-				f.player = (char)(line[10] == '1' ? 'O' : 'X');
+				f.player = (char)(ft_strstr(line, "p1") ? 'O' : 'X');
 				f.enemy = (char)(f.player == 'X' ? 'O' : 'X');
 			}
-		f.n = (size_t)ft_atoi(line + 8);
-		f.x = (size_t)ft_atoi(line + 9 + ft_nbrlen(f.n, 10));
-		f.board = ft_arraystrnew(f.n);
-		f.board[f.n] = 0;
-		while (ft_getline(0, &line) > 0 && i < f.n && line[0] != 'P')
-			f.board[i++] = ft_strcpy(ft_strnew(f.x), line + 4);
+		f.board = get_array(line, &f.n, &f.x);
+		while (i < f.n)
+			f.board[i++] = ft_strnew(f.x);
+		ft_getline(0, &line);
 	}
 	else
-		while (ft_getline(0, &line) > 0 && i < f.n && line[0] != 'P')
-			ft_strcpy(f.board[i++], line + 4);
-	get_token(line, 0);
-	free(line);
+		while (i++ < 3 && ft_getline(0, &line))
+			;
+	i = 0;
+	while (ft_getline(0, &line) > 0 && i < f.n && !ft_strstr(line, "Piece"))
+		ft_strcpy(f.board[i++], line + 4);
+	f.token = get_array(line, &f.tn, &f.tx);
+	i = 0;
+	while (i < f.tn && ft_getline(0, &f.token[i]) > 0)
+		i++;
 }
 
 int			main(void)
 {
+	static char	*line;
+
 	ft_bzero(&f, sizeof(t_f));
 	while (1)
 	{
-		get_info(0);
+		update_board(line, 0);
+		f.t[0] = get_token_begin_n();
+		f.t[1] = get_token_begin_x();
 		if (!(search_place()))
 			break ;
 		ft_arraystrfree(f.token);
 	}
 	ft_arraystrfree(f.board);
 	ft_arraystrfree(f.token);
+	free(line);
 	ft_printf(RED"Filler's end\n"RESET);
 	return (0);
 }

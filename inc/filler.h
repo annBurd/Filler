@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/23 18:24:16 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/23 22:11:31 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,8 @@ typedef struct	s_f
 	char 		enemy;
 }				t_f;
 
-//typedef struct	s_ox //additional
-//{
-//	short		o;
-//	short		x;
-//}				t_ox;
-
 extern t_f		f;
 
-//void			get_info();
-void			refresh_info();
-
-
-
-int				f_exit(int code);
-void			refresh_board();
 int				search_place();
-void			get_board(/*char *s*/);
-//void			get_token();
-
 
 #endif
