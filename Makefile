@@ -6,11 +6,12 @@
 #    By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 18:17:42 by aburdeni          #+#    #+#              #
-#    Updated: 2018/11/11 19:34:27 by aburdeni         ###   ########.fr        #
+#    Updated: 2018/11/23 18:49:31 by aburdeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = aburdeni.filler
+NAME = filler
+LOGIN = aburdeni.$(NAME)
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -24,7 +25,8 @@ LIBFT = $(LIBFT_DIR)libft.a
 
 HEADER = $(wildcard $(INC_DIR)*.h)
 
-SRC = filler.c
+SRC = filler.c \
+    start_game.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
@@ -36,13 +38,13 @@ all:
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(RESET)start compilation"
 	@make -C $(LIBFT_DIR)
-	@echo "release alien spaceships from $(DIMCYAN)Filler/$(PURPLE)"
-	@make $(NAME)
+	@echo "release alien spaceships from $(DIMCYAN)$(NAME)/$(PURPLE)"
+	@make $(LOGIN)
 
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+$(LOGIN): $(OBJ)
+	@$(CC) $(CFLAGS) -o $(LOGIN) $(OBJ) $(LIBFT)
 	@echo "$(RESET)"
-	@echo "got $(DIMCYAN)$(NAME)$(RESET) binary"
+	@echo "got $(DIMCYAN)$(LOGIN)$(RESET) binary"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -55,9 +57,9 @@ clean:
 	
 fclean:	
 	@make clean
-	@rm -rf $(NAME)
+	@rm -rf $(LOGIN)
 	@make -C $(LIBFT_DIR) fclean
-	@echo "$(DIMCYAN)push_swap/$(RESET) was fcleaned"
+	@echo "$(DIMCYAN)$(NAME)/$(RESET) was fcleaned"
 
 re: fclean all
 

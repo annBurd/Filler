@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/21 20:09:35 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/23 19:04:21 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,70 +14,81 @@
 
 t_f			f;
 
-static void	show_usage(void)
+static void	set_token_dot_start(size_t i, size_t j)
 {
-	ft_printf("Usage: "
-	"./filler_vm -f path [-i | -p1 path | -p2 path] [-s | -q | -t time]\n\n"
-	"\t-t  --time\t\tset timeout in second\n"
-	"\t-q  --quiet\t\tquiet mode\n"
-	"\t-i  --interactive\tinteractive mode(default)\n"
-	"\t-p1 --player1\tuse filler binary as a first player\n"
-	"\t-p2 --player2\tuse filler binary as a second player\n"
-	"\t-f  --file\t\tuse a map file (required)\n"
-	"\t-s  --seed\t\tuse the seed number (initialization random) (man srand)"
-	"\n");
-	exit(EXIT_FAILURE);
-}
-
-/*
-** error:
-** can not read the file// -1
-** wrong map file // -2
-** bad player
-*/
-
-int			f_exit(int code)
-{
-//	if (code < 0)
-		perror("error:\n");
-	//free memory depending on code
-	if (f.board)
-		ft_arraystrfree(f.board);
-	exit(code);
-}
-
-static void	handle_flags(char **arg)
-{
-	srand((unsigned)time(0));
-	ft_bzero(&f, sizeof(t_f));
-	while (*arg)
+	while (i < f.tn)
 	{
-		if (ft_strequ(*arg, "-t"))
-			f.time = (size_t)ft_atoi(*(++arg));
-		else if (ft_strequ(*arg, "-q"))
-			f.quietMode = 1;
-		else if (ft_strequ(*arg, "-i")) //(default)
-			f.interactiveMode = 1;
-		else if (ft_strequ(*arg, "-p1"))
-			f.p1 = *(++arg);
-		else if (ft_strequ(*arg, "-p2"))
-			f.p2 = *(++arg);
-		else if (ft_strequ(*arg, "-f")) //(required)
-			get_board(*(++arg));
-		else if (ft_strequ(*arg, "-s"))
-			f.seed = (size_t)rand();
-		else
-			break ;//error for unexist flag? ignor?
-		arg++;
+		j &= 0;
+		while (j < f.tx)
+			if (f.token[i][j++] == '*')
+			{
+				f.t[0] = i;
+				break ;
+			}
+		i++;
 	}
-	print_board();// del me
+	j &= 0;
+	while (j < f.tx)
+	{
+		i &= 0;
+		while (i < f.tn)
+			if (f.token[i++][j] == '*')
+			{
+				f.t[1] = j;
+				break ;
+			}
+		j++;
+	}
 }
 
-int			main(int argc, char **argv)
+static void	get_token(char *line, size_t i)
 {
-	argc == 1 ? show_usage() : handle_flags(++argv);
-	start_game();
-	ft_printf(RED"Filler's end\n"RESET);
+	f.tn = (size_t)ft_atoi(line + 6);
+	f.tx = (size_t)ft_atoi(line + 7 + ft_nbrlen(f.tn, 10));
+	f.token = ft_arraystrnew(f.tn);
+	while (ft_getline(0, &line) > 0 && i < f.tn)
+		f.token[i++] = ft_strcpy(ft_strnew(f.tx), line);
+	set_token_dot_start(0, 0);
+}
+
+static void	get_info(size_t i)
+{
+	static char	*line;
+
+	if (!f.board)
+	{
+		while (ft_getline(0, &line) > 0 && line[0] != 'P')
+			if (ft_strstr(line, "aburdeni.filler"))
+			{
+				f.player = (char)(line[10] == '1' ? 'O' : 'X');
+				f.enemy = (char)(f.player == 'X' ? 'O' : 'X');
+			}
+		f.n = (size_t)ft_atoi(line + 8);
+		f.x = (size_t)ft_atoi(line + 9 + ft_nbrlen(f.n, 10));
+		f.board = ft_arraystrnew(f.n);
+		f.board[f.n] = 0;
+		while (ft_getline(0, &line) > 0 && i < f.n && line[0] != 'P')
+			f.board[i++] = ft_strcpy(ft_strnew(f.x), line + 4);
+	}
+	else
+		while (ft_getline(0, &line) > 0 && i < f.n && line[0] != 'P')
+			ft_strcpy(f.board[i++], line + 4);
+	get_token(line, 0);
+	free(line);
+}
+
+int			main(void)
+{
+	ft_bzero(&f, sizeof(t_f));
+	while (1)
+	{
+		get_info(0);
+		if (!(search_place()))
+			break ;
+		ft_arraystrfree(f.token);
+	}
 	ft_arraystrfree(f.board);
+	ft_arraystrfree(f.token);
+	ft_printf(RED"Filler's end\n"RESET);
 	return (0);
 }
