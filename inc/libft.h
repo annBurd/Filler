@@ -38,7 +38,6 @@ typedef struct	s_list
 }				t_list;
 
 void			ft_arraystrfree(char **array);
-char			**ft_arraystrnew(size_t size);
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
