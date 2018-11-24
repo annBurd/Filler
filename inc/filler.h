@@ -16,7 +16,6 @@
 #include "libft.h"
 #include "color.h"
 #include "ft_printf.h"
-#include <time.h>
 
 typedef struct	s_f
 {
@@ -28,8 +27,6 @@ typedef struct	s_f
 	size_t		tn; //lines
 	size_t		tx; //column;
 	size_t		t[2];
-
-	size_t		out[2];
 
 	char 		player;
 	char 		enemy;

@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   update_boardd: 2018/11/23 22:16:57 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/23 22:16:57 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,5 @@ int			main(void)
 	ft_arraystrfree(f.board);
 	ft_arraystrfree(f.token);
 	free(line);
-	ft_printf(RED"Filler's end\n"RESET);
 	return (0);
 }
