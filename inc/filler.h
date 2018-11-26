@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 19:54:10 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:04:47 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ typedef struct	s_out
 	int			n;
 	int			x;
 	size_t		steps;
-	size_t		tn;
-	size_t		tx;
+	size_t		t_begin_n;
+	size_t		t_begin_x;
 }				t_out;
 
 extern t_f		g_f;
-//extern t_out	g_out;
 
-int				search_place();
+void			search_place();
 
 #endif
