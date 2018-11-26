@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 18:27:35 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/26 18:29:00 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 t_f			g_f;
 
-static char	**get_array(const char *s, size_t *n, size_t *x)
+static char	**get_array(const char *line, size_t *n, size_t *x)
 {
 	char	**fresh;
 	size_t	i;
 
 	i = 0;
-	while (s[i] && !ft_isdigit(s[i]))
+	while (line[i] && !ft_isdigit(line[i]))
 		i++;
-	while (s[i] && s[i] != ' ')
-		*n = *n * 10 + s[i++] - '0';
+	while (line[i] && line[i] != ' ')
+		*n = *n * 10 + line[i++] - '0';
 	i++;
-	while (s[i] && s[i] != ':')
-		*x = *x * 10 + s[i++] - '0';
+	while (line[i] && line[i] != ':')
+		*x = *x * 10 + line[i++] - '0';
 	fresh = (char**)malloc(sizeof(char*) * (*n + 1));
 	fresh[*n] = 0;
 	return (fresh);
