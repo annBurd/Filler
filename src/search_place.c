@@ -6,16 +6,18 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 20:11:40 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:14:52 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
 
-#define DOT_IS_ENEMY (g_f.board[n + i][x + j] == g_f.enemy || \
-					g_f.board[n + i][x + j] == g_f.enemy + 32)
-#define DOT_IS_PLAYER (g_f.board[n + i][x + j] == g_f.player || \
-					g_f.board[n + i][x + j] == g_f.player + 32)
+#define DOT_IS_ENEMY(n, x) (g_f.board[n][x] == g_f.enemy || \
+							g_f.board[n][x] == g_f.enemy + 32)
+#define DOT_IS_PLAYER(n, x) (g_f.board[n][x] == g_f.player || \
+							g_f.board[n][x] == g_f.player + 32)
+#define CUR_N (n + i - g_out.t_begin_n)
+#define CUR_X (x + j - g_out.t_begin_x)
 
 t_f			g_f;
 t_out		g_out;
@@ -50,7 +52,7 @@ static size_t	get_token_begin_x(void)
 	j = 0;
 	while (j < g_f.tx)
 	{
-		i &= 0;
+		i = 0;
 		while (i < g_f.tn)
 		{
 			if (g_f.token[i][j] == '*')
@@ -74,7 +76,7 @@ static void	count_distance_to_enemy(size_t n, size_t x)
 	{
 		while (j < g_f.x)
 		{
-			if DOT_IS_ENEMY
+			if DOT_IS_ENEMY(i, j)
 			{
 				tmp = ft_abs((int)(i - n)) + ft_abs((int)(j - x));
 				if (tmp > g_out.steps)
@@ -99,16 +101,16 @@ static void	check_position(size_t n, size_t x)
 
 	link = 0;
 	i = g_out.t_begin_n;
-	while (i < g_f.tn && n + i + g_f.tn <= g_f.n)
+	while (i < g_f.tn && n + i + g_f.tn - g_out.t_begin_n <= g_f.n)
 	{
 		j = g_out.t_begin_x;
-		while (j < g_f.tx && x + j + g_f.tx <= g_f.x)
+		while (j < g_f.tx && x + j + g_f.tx - g_out.t_begin_x <= g_f.x)
 		{
 			if (g_f.token[i][j] == '*')
 			{
-				if DOT_IS_ENEMY
+				if DOT_IS_ENEMY(CUR_N, CUR_X)
 					return ;
-				else if DOT_IS_PLAYER
+				else if DOT_IS_PLAYER(CUR_N, CUR_X)
 					link++;
 				if (link > 1)
 					return ;
