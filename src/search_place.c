@@ -6,86 +6,50 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 18:08:44 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/26 19:34:07 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
 
-#define DOT_IS_PLAYER (f.board[n + i][x + j] == f.player || \
-					f.board[n + i][x + j] == f.player + 32)
-#define DOT_IS_ENEMY (f.board[n + i][x + j] == f.enemy || \
-					f.board[n + i][x + j] == f.enemy + 32)
+#define DOT_IS_ENEMY (g_f.board[n + i][x + j] == g_f.enemy || \
+					g_f.board[n + i][x + j] == g_f.enemy + 32)
+#define DOT_IS_PLAYER (g_f.board[n + i][x + j] == g_f.player || \
+					g_f.board[n + i][x + j] == g_f.player + 32)
 
-t_f			f;
-t_out		out;
+t_f			g_f;
+t_out		g_out;
 
-static size_t	get_token_begin_n(void)
+static void	count_distance_to_enemy(size_t n, size_t x)
 {
 	size_t	i;
 	size_t	j;
-	size_t	z;
+	size_t	tmp;
 
-	i = 0;
-	j = 0;
-	z = 0;
-	while (i < f.tn)
+	i = n;
+	j = x;
+	while (i < g_f.n)
 	{
-		j = 0;
-		while (j < f.tx)
+		while (j < g_f.x)
 		{
-			if (f.token[i][z] == '.' || f.token[i][z] == '*')
-				j++;
-			if (f.token[i][j] == '*')
-				return (i);
-			z++;
+			if DOT_IS_ENEMY
+			{
+				tmp = ft_abs((int)(i - n)) + ft_abs((int)(j - x));
+				if (tmp > g_out.steps)
+				{
+					g_out.steps = tmp;
+					g_out.n = i;
+					g_out.x = j;
+				}
+			}
+			j++;
 		}
 		i++;
+		j = 0;
 	}
-	return (0);
 }
 
-//static size_t	get_token_begin_n(void)
-//{
-//	size_t	i;
-//	size_t	j;
-//
-//	i = 0;
-//	j = 0;
-//	while (i < f.tn)
-//	{
-//		j = 0;
-//		while (j < f.tx)
-//			if (f.token[i][j] == '*')
-//				return (i);
-//			else
-//				j++;
-//		i++;
-//	}
-//	return (0);
-//}
-
-//static size_t	get_token_begin_x(void)
-//{
-//	size_t	i;
-//	size_t	j;
-//
-//	i = 0;
-//	j = 0;
-//	while (j < f.tx)
-//	{
-//		i &= 0;
-//		while (i < f.tn)
-//			if (f.token[i][j] == '*')
-//				return (j);
-//			else
-//				i++;
-//		j++;
-//	}
-//	return (0);
-//}
-
-static int	check_position(size_t n, size_t x)
+static void	check_position(size_t n, size_t x)
 {
 	size_t	i;
 	size_t	j;
@@ -93,25 +57,68 @@ static int	check_position(size_t n, size_t x)
 
 	link = 0;
 	i = 0;
-	while (f.token[i] && i < f.tn && n + i + f.tn <= f.n)
+	while (i < g_f.tn && n + i + g_f.tn <= g_f.n)
 	{
 		j = 0;
-		while (j < f.tx && x + j + f.tx <= f.x)
+		while (j < g_f.tx && x + j + g_f.tx <= g_f.x)
 		{
-			if (f.token[i][j] == '*')
+			if (g_f.token[i][j] == '*')
 			{
 				if DOT_IS_ENEMY
-					return (0);
+					return ;
 				else if DOT_IS_PLAYER
 					link++;
 				if (link > 1)
-					return (0);
+					return ;
 			}
 			j++;
 		}
 		i++;
 	}
-	return (link ? 1 : 0);
+	if (link)
+		count_distance_to_enemy(n, x);
+}
+
+static size_t	get_token_begin_n(void)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (i < g_f.tn)
+	{
+		j = 0;
+		while (j < g_f.tx)
+		{
+			if (g_f.token[i][j] == '*')
+				return (i);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+static size_t	get_token_begin_x(void)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (j < g_f.tx)
+	{
+		i &= 0;
+		while (i < g_f.tn)
+		{
+			if (g_f.token[i][j] == '*')
+				return (j);
+			i++;
+		}
+		j++;
+	}
+	return (0);
 }
 
 int	search_place()
@@ -119,19 +126,19 @@ int	search_place()
 	size_t	n;
 	size_t	x;
 
-	ft_bzero(&out, sizeof(t_out));
-	out.tn = get_token_begin_n();
-//	out.tx = get_token_begin_x();
+	ft_bzero(&g_out, sizeof(t_out));
+	g_out.tn = get_token_begin_n();
+	g_out.tx = get_token_begin_x();
 	n = 0;
-	while (n < f.n)
+	while (n < g_f.n)
 	{
 		x = 0;
-		while (x < f.x)
+		while (x < g_f.x)
 			check_position(n, x++);
 		n++;
 	}
-	if (out.steps)
-		ft_printf("%d %d\n", out.n, out.x);
-	ft_arraystrfree(f.token);
+	if (g_out.steps)
+		ft_printf("%d %d\n", g_out.n, g_out.x);
+	ft_arraystrfree(g_f.token);
 	return (0);
 }
