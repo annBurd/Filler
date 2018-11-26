@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 20:06:14 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:11:40 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,21 @@ static size_t	get_token_begin_x(void)
 	return (0);
 }
 
-static void	count_distance_to_enemy(int n, int x)
+static void	count_distance_to_enemy(size_t n, size_t x)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 	size_t	tmp;
 
 	i = n;
 	j = x;
-	while (i < (int)g_f.n)
+	while (i < g_f.n)
 	{
-		while (j < (int)g_f.x)
+		while (j < g_f.x)
 		{
 			if DOT_IS_ENEMY
 			{
-				tmp = ft_abs(i - n) + ft_abs(j - x);
+				tmp = ft_abs((int)(i - n)) + ft_abs((int)(j - x));
 				if (tmp > g_out.steps)
 				{
 					g_out.steps = tmp;
