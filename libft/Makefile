@@ -26,7 +26,8 @@ PRF_SRC = ft_printf.c \
 	pr_join.c \
 	pr_utoa.c
 
-SRC = ft_arraystrfree.c \
+SRC = ft_abs.c \
+    ft_arraystrfree.c \
     ft_atoi.c \
 	ft_atoi_base.c \
 	ft_bzero.c \
