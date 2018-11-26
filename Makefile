@@ -26,7 +26,7 @@ LIBFT = $(LIBFT_DIR)libft.a
 HEADER = $(wildcard $(INC_DIR)*.h)
 
 SRC = filler.c \
-    start_game.c
+    search_place.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
