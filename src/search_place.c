@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 19:57:55 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/26 20:06:14 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ static void	check_position(size_t n, size_t x)
 	size_t	link;
 
 	link = 0;
-	i = g_out.tn;
+	i = g_out.t_begin_n;
 	while (i < g_f.tn && n + i + g_f.tn <= g_f.n)
 	{
-		j = g_out.tn;
+		j = g_out.t_begin_x;
 		while (j < g_f.tx && x + j + g_f.tx <= g_f.x)
 		{
 			if (g_f.token[i][j] == '*')
@@ -121,14 +121,14 @@ static void	check_position(size_t n, size_t x)
 		count_distance_to_enemy(n, x);
 }
 
-int			search_place()
+void			search_place()
 {
 	size_t	n;
 	size_t	x;
 
 	ft_bzero(&g_out, sizeof(t_out));
-	g_out.tn = get_token_begin_n();
-	g_out.tx = get_token_begin_x();
+	g_out.t_begin_n = get_token_begin_n();
+	g_out.t_begin_x = get_token_begin_x();
 	n = 0;
 	while (n < g_f.n)
 	{
@@ -143,5 +143,4 @@ int			search_place()
 	if (g_out.steps)
 		ft_printf("%d %d\n", g_out.n, g_out.x);
 	ft_arraystrfree(g_f.token);
-	return (0);
 }
