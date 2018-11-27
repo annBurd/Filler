@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 18:30:00 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 19:20:43 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ static void	update_board(char *line)
 	i = 0;
 	ft_getline(0, &line);
 	while (i < g_f.n && ft_getline(0, &line) > 0)
+	{
+		dprintf(2, "%s\n", line);
 		ft_strcpy(g_f.board[i++], line + 4);
+	}
 }
 
 static void	update_token(char *line)
@@ -81,6 +84,8 @@ int			main(void)
 		{
 			update_token(line);
 			search_place();
+//				ft_printf("%d %d\n", g_f.out_n, g_f.out_n);
+			dprintf(1, "%zu %zu\n", g_f.out_n, g_f.out_x);
 		}
 	}
 	ft_arraystrfree(g_f.board);
