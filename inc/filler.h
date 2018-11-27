@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 17:15:41 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 19:03:54 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ typedef struct	s_f
 
 	char 		player;
 	char 		enemy;
+
+	size_t		out_n;
+	size_t		out_x;
 }				t_f;
 
 typedef struct	s_out
