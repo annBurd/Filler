@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 20:11:40 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 17:15:41 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct	s_out
 	size_t		n;
 	size_t		x;
 	size_t		steps;
-	size_t		t_begin_n;
-	size_t		t_begin_x;
+	size_t		t_n;
+	size_t		t_x;
 }				t_out;
 
 extern t_f		g_f;
