@@ -27,6 +27,7 @@ PRF_SRC = ft_printf.c \
 	pr_utoa.c
 
 SRC = ft_abs.c \
+	gnl/get_next_line.c \
     ft_arraystrfree.c \
     ft_atoi.c \
 	ft_atoi_base.c \

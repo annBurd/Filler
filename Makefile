@@ -6,7 +6,7 @@
 #    By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/27 18:17:42 by aburdeni          #+#    #+#              #
-#    Updated: 2018/11/23 18:49:31 by aburdeni         ###   ########.fr        #
+#    Updated: 2018/11/27 21:53:24 by aburdeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ HEADER = $(wildcard $(INC_DIR)*.h)
 
 SRC = filler.c \
     search_place.c \
-    get_token_start_coordinates.c
+    set_token_coord.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

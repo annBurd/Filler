@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_support.c                                      :+:      :+:    :+:   */
+/*   set_token_coord.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 20:15:53 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 20:26:53 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 22:24:42 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,58 @@ static size_t	get_x(void)
 	return (0);
 }
 
-inline void		set_support()
+static size_t	get_n_end(void)
+{
+	size_t	i;
+	size_t	j;
+	size_t	star;
+
+	i = 0;
+	j = 0;
+	star = 0;
+	while (i < g_f.tn)
+	{
+		j = 0;
+		while (j < g_f.tx)
+		{
+			if (g_f.token[i][j] == '*')
+				star = i;
+			j++;
+		}
+		i++;
+	}
+	return (star);
+}
+
+static size_t	get_x_end(void)
+{
+	size_t	i;
+	size_t	j;
+	size_t	star;
+
+	i = 0;
+	j = 0;
+	star = 0;
+	while (j < g_f.tx)
+	{
+		i = 0;
+		while (i < g_f.tn)
+		{
+			if (g_f.token[i][j] == '*')
+				star = j;
+			i++;
+		}
+		j++;
+	}
+	return (star);
+}
+
+inline void		set_token_coord()
 {
 	ft_bzero(&g_out, sizeof(t_out));
 	g_out.steps = g_f.n + g_f.x;
 	g_out.t_n = get_n();
 	g_out.t_x = get_x();
+	g_out.t_n_end = get_n_end();
+	g_out.t_x_end = get_x_end();
 }
