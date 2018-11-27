@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/26 18:29:00 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 18:30:00 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ static void	update_board(char *line)
 {
 	size_t	i;
 
-	i = 0;
 	if (!g_f.board)
 	{
+		i = 0;
 		g_f.board = get_array(line, &g_f.n, &g_f.x);
 		while (i < g_f.n)
 			g_f.board[i++] = ft_strnew(g_f.x);
 	}
 	i = 0;
+	ft_getline(0, &line);
 	while (i < g_f.n && ft_getline(0, &line) > 0)
 		ft_strcpy(g_f.board[i++], line + 4);
 }
@@ -52,6 +53,10 @@ static void	update_token(char *line)
 {
 	size_t	i;
 
+	if (g_f.token)
+		ft_arraystrfree(g_f.token);
+	g_f.tn = 0;
+	g_f.tx = 0;
 	g_f.token = get_array(line, &g_f.tn, &g_f.tx);
 	i = 0;
 	while (i < g_f.tn && ft_getline(0, &g_f.token[i]) > 0)
