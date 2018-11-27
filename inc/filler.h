@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 19:03:54 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 20:20:28 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ typedef struct	s_out
 }				t_out;
 
 extern t_f		g_f;
+extern t_out	g_out;
 
 void			search_place();
+void			set_support();
 
 #endif

@@ -26,7 +26,8 @@ LIBFT = $(LIBFT_DIR)libft.a
 HEADER = $(wildcard $(INC_DIR)*.h)
 
 SRC = filler.c \
-    search_place.c
+    search_place.c \
+    get_token_start_coordinates.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
