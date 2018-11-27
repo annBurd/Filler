@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 19:20:43 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 22:19:44 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	update_board(char *line)
 	ft_getline(0, &line);
 	while (i < g_f.n && ft_getline(0, &line) > 0)
 	{
-		dprintf(2, "%s\n", line);
+//		dprintf(2, "%s\n", line);
 		ft_strcpy(g_f.board[i++], line + 4);
 	}
 }
@@ -73,20 +73,28 @@ int			main(void)
 	ft_bzero(&g_f, sizeof(t_f));
 	while (ft_getline(0, &line) > 0)
 	{
+
+//		dprintf(2, "main llop\n");
 		if (ft_strstr(line, "exec") && ft_strstr(line, "aburdeni.filler"))
 		{
 			g_f.player = (char)(ft_strstr(line, "p1") ? 'O' : 'X');
 			g_f.enemy = (char)(g_f.player == 'X' ? 'O' : 'X');
+//			dprintf(2, "3\n");
 		}
 		else if (ft_strstr(line, "Plateau"))
+		{
+//			dprintf(2, "1 \n");
 			update_board(line);
+//			dprintf(2, "2\n");
+		}
 		else if (ft_strstr(line, "Piece"))
 		{
+//			dprintf(2, "gnl%s\n", line);
 			update_token(line);
 			search_place();
-//				ft_printf("%d %d\n", g_f.out_n, g_f.out_n);
 			dprintf(1, "%zu %zu\n", g_f.out_n, g_f.out_x);
 		}
+//		dprintf(2, "main llop\n");
 	}
 	ft_arraystrfree(g_f.board);
 	if (g_f.token)

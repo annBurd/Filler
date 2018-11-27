@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 20:24:36 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/27 22:24:41 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ static int		check_position(size_t n, size_t x)
 	dot = 0;
 	i = g_out.t_n;
 
-	while (g_f.token[i] && CUR_N + g_f.tn <= g_f.n)
+	while (g_f.token[i] && CUR_N + g_out.t_n_end < g_f.n)
 	{
 		j = g_out.t_x;
-		while (g_f.token[i][j] && CUR_X + g_f.tx <= g_f.x)
+		while (g_f.token[i][j] && CUR_X + g_out.t_x_end < g_f.x)
 		{
 			if (g_f.token[i][j] == '*' && CUR_N < g_f.n && CUR_X < g_f.x)
 			{
@@ -92,14 +92,12 @@ void			search_place()
 	size_t	n;
 	size_t	x;
 
-	set_support();
-
 //	sleep(1);
 //	int i = -1;
 //	while (g_f.board[++i])
 //		dprintf(2, "%s\n", g_f.board[i]);
 
-//	dprintf(2, "====== token_begin t(%zu, %zu)\n", g_out.t_n, g_out.t_x);
+	set_token_coord();
 	n = 0;
 	while (g_f.board[n])
 	{
