@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 18:02:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 22:18:26 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/09/24 19:02:43 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdint.h>
-# include <fcntl.h>
-
-// # define BUFF_SIZE 1024
-
-typedef struct	s_fd
-{
-	int			fd;
-	char		*s;
-	struct s_fd	*next;
-}				t_fd;
-
-int				ft_getline(const int fd, char **line);
 
 typedef struct	s_list
 {
@@ -36,8 +24,6 @@ typedef struct	s_list
 	size_t			content_size;
 	struct s_list	*next;
 }				t_list;
-
-void			ft_arraystrfree(char **array);
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
@@ -59,9 +45,6 @@ size_t			ft_nbrlen(intmax_t value, int base);
 size_t			ft_nbrulen(uintmax_t value, int base);
 char			*ft_itoa_base(intmax_t value, short base);
 int				ft_atoi_base(const char *str, short base);
-int				is_ascending_order(int *tab, int size);
-int				is_descending_order(int *tab, int size);
-size_t			ft_abs(int nbr);
 
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
