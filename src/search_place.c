@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/29 22:27:02 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/30 00:10:29 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void		count_distance_to_enemy(size_t n, size_t x)
 				{
 					g_out.steps = tmp;
 					g_f.out_n = n - g_out.t_n;
-					g_f.out_x = x - g_out.t_x;
+					g_f.out_x = ((int)x - (int)g_out.t_x < 0) ? 0 : x - g_out.t_x;
 //					dprintf(2, "== distance- spets %zu\n", g_out.steps);
 //					dprintf(2, "== out_n (%zu) = n(%zu) - t_n(%zu)\n", g_f.out_n, n, g_out.t_n);
 //					dprintf(2, "== out_x (%zu) = x(%zu) - t_x(%zu)\n", g_f.out_x, x, g_out.t_x);
@@ -96,18 +96,10 @@ int		valid_position(size_t n, size_t x)
 		{
 			if (g_f.token[i][j] == '*')
 			{
-				if ENEMY_DOT(n + i, x + j)
-				{
-//					dprintf(2, "valid 2\n");
-					return (0);
-				}
-				else if PLAYER_DOT(n + i, x + j)
+				if PLAYER_DOT(n + i, x + j)
 					dot++;
-				if (dot > 1)
-				{
-//					dprintf(2, "valid 3\n");
+				if (ENEMY_DOT(n + i, x + j) || dot > 1)
 					return (0);
-				}
 			}
 			j++;
 		}
@@ -139,8 +131,9 @@ void			search_place()
 //		sleep(1);
 		dprintf(2, "reserch (%zu,%zu)\n", g_f.out_n, g_f.out_x);
 		//	dprintf(2, "(%zu,%zu) (%zu,%zu)\n", g_out.t_n, g_out.t_x, g_out.t_n_end, g_out.t_x_end);
-		try_put_around(g_f.out_n + 1, g_f.out_x + 1);
-//		if (!try_put_around(g_f.out_n + 1, g_f.out_x + 1))
-//			try_another_place();
+		if (!try_put_around(g_f.out_n, g_f.out_x, 1, 1))
+			try_put_in_token_distance(g_f.out_n, g_f.out_x, g_f.tn - 1, g_f.tx - 1);
+
+		dprintf(2, "reserch end\n");
 	}
 }
