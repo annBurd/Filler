@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 20:20:36 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/19 17:59:39 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/29 19:25:58 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	**get_array(char const *s, char c)
 {
 	size_t	line;
-	char 	**fresh;
+	char	**fresh;
 
 	line = 0;
 	while (*(s++))
@@ -27,7 +27,7 @@ static char	**get_array(char const *s, char c)
 	return (fresh);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char		**ft_strsplit(char const *s, char c)
 {
 	char	**array;
 	size_t	n;

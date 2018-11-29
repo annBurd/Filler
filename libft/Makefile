@@ -27,7 +27,6 @@ PRF_SRC = ft_printf.c \
 	pr_utoa.c
 
 SRC = ft_abs.c \
-	gnl/get_next_line.c \
     ft_arraystrfree.c \
     ft_atoi.c \
 	ft_atoi_base.c \
@@ -105,7 +104,8 @@ SRC = ft_abs.c \
 	ft_swap.c \
 	ft_tolower.c \
 	ft_toupper.c \
-	$(addprefix $(PRF_DIR), $(PRF_SRC))
+	$(addprefix $(PRF_DIR), $(PRF_SRC)) \
+	gnl/get_next_line.c
  
 OBJ = $(SRC:.c=.o)
 

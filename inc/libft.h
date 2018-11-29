@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 18:02:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 22:18:26 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/29 19:13:16 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdint.h>
 # include <fcntl.h>
 
-// # define BUFF_SIZE 1024
+# define BUFF_SIZE 1024
 
 typedef struct	s_fd
 {

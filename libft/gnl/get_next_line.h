@@ -3,21 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akupriia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 10:32:17 by akupriia          #+#    #+#             */
-/*   Updated: 2017/12/12 10:32:17 by akupriia         ###   ########.fr       */
+/*   Updated: 2018/11/29 19:23:00 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 1000
 
-# include <fcntl.h>
-# include "libft/libft.h"
+# include "../../inc/libft.h"
 
-int		get_next_line(const int fd, char **line);
-t_list	*ft_makelst(t_list *list, void const *content, size_t content_size);
+typedef struct		s_gnl
+{
+	char			*arr;
+	int				fd;
+	struct s_gnl	*next;
+}					t_gnl;
+
+int					get_next_line(const int fd, char **line);
 
 #endif
