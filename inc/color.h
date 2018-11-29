@@ -1,6 +1,16 @@
 #ifndef COLOR_H
 # define COLOR_H
 
+#include <stdio.h>
+
+#define MAX_OF(type) \
+    (((type)(~0LLU) > (type)((1LLU<<((sizeof(type)<<3)-1))-1LLU)) ?	\
+    (long long unsigned int)(type)(~0LLU) :	\
+    (long long unsigned int)(type)((1LLU<<((sizeof(type)<<3)-1))-1LLU))
+#define MIN_OF(type) \
+    (((type)(1LLU<<((sizeof(type)<<3)-1)) < (type)1) ? \
+    (long long int)((~0LLU)-((1LLU<<((sizeof(type)<<3)-1))-1LLU)) : 0LL)
+
 /*
 ** 	RED //червоний
 **	GREEN //зелений
