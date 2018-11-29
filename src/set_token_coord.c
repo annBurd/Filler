@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 20:15:53 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 22:24:42 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/29 20:56:52 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static size_t	get_x_end(void)
 	return (star);
 }
 
-inline void		set_token_coord()
+inline void		set_token_coord(void)
 {
 	ft_bzero(&g_out, sizeof(t_out));
 	g_out.steps = g_f.n + g_f.x;

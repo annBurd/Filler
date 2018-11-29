@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/27 22:19:44 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/11/29 20:22:00 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,9 @@ static void	update_board(char *line)
 			g_f.board[i++] = ft_strnew(g_f.x);
 	}
 	i = 0;
-	ft_getline(0, &line);
-	while (i < g_f.n && ft_getline(0, &line) > 0)
-	{
-//		dprintf(2, "%s\n", line);
+	get_next_line(0, &line);
+	while (i < g_f.n && get_next_line(0, &line) > 0)
 		ft_strcpy(g_f.board[i++], line + 4);
-	}
 }
 
 static void	update_token(char *line)
@@ -62,7 +59,7 @@ static void	update_token(char *line)
 	g_f.tx = 0;
 	g_f.token = get_array(line, &g_f.tn, &g_f.tx);
 	i = 0;
-	while (i < g_f.tn && ft_getline(0, &g_f.token[i]) > 0)
+	while (i < g_f.tn && get_next_line(0, &g_f.token[i]) > 0)
 		i++;
 }
 
@@ -71,30 +68,21 @@ int			main(void)
 	static char	*line;
 
 	ft_bzero(&g_f, sizeof(t_f));
-	while (ft_getline(0, &line) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
-
-//		dprintf(2, "main llop\n");
 		if (ft_strstr(line, "exec") && ft_strstr(line, "aburdeni.filler"))
 		{
 			g_f.player = (char)(ft_strstr(line, "p1") ? 'O' : 'X');
 			g_f.enemy = (char)(g_f.player == 'X' ? 'O' : 'X');
-//			dprintf(2, "3\n");
 		}
 		else if (ft_strstr(line, "Plateau"))
-		{
-//			dprintf(2, "1 \n");
 			update_board(line);
-//			dprintf(2, "2\n");
-		}
 		else if (ft_strstr(line, "Piece"))
 		{
-//			dprintf(2, "gnl%s\n", line);
 			update_token(line);
 			search_place();
 			dprintf(1, "%zu %zu\n", g_f.out_n, g_f.out_x);
 		}
-//		dprintf(2, "main llop\n");
 	}
 	ft_arraystrfree(g_f.board);
 	if (g_f.token)
