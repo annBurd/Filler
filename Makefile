@@ -27,6 +27,7 @@ HEADER = $(wildcard $(INC_DIR)*.h)
 
 SRC = filler.c \
     search_place.c \
+    research_place.c \
     set_token_coord.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))

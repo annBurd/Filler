@@ -6,7 +6,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Ipthreads")
 set(SOURCE_FILES
         src/filler.c
         src/search_place.c
-        src/set_token_coord.c)
+        src/set_token_coord.c
+        src/research_place.c)
 
 include_directories(inc)
 link_directories(libft)
