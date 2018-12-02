@@ -13,21 +13,21 @@
 #include "../inc/filler.h"
 
 t_f				g_f;
-t_out			g_out;
+t_solve			g_solve;
 
-static size_t	get_n(void)
+static int	get_ul_n(int n, int x)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while (i < g_f.tn)
+	while (i < n)
 	{
 		j = 0;
-		while (j < g_f.tx)
+		while (j < x)
 		{
-			if (g_f.token[i][j] == '*')
+			if IS_STAR(i, j)
 				return (i);
 			j++;
 		}
@@ -36,19 +36,19 @@ static size_t	get_n(void)
 	return (0);
 }
 
-static size_t	get_x(void)
+static int	get_ul_x(int n, int x)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while (j < g_f.tx)
+	while (j < x)
 	{
 		i = 0;
-		while (i < g_f.tn)
+		while (i < n)
 		{
-			if (g_f.token[i][j] == '*')
+			if IS_STAR(i, j)
 				return (j);
 			i++;
 		}
@@ -57,21 +57,21 @@ static size_t	get_x(void)
 	return (0);
 }
 
-static size_t	get_n_end(void)
+static int	get_br_n(int n, int x)
 {
-	size_t	i;
-	size_t	j;
-	size_t	star;
+	int	i;
+	int	j;
+	int	star;
 
 	i = 0;
 	j = 0;
 	star = 0;
-	while (i < g_f.tn)
+	while (i < n)
 	{
 		j = 0;
-		while (j < g_f.tx)
+		while (j < x)
 		{
-			if (g_f.token[i][j] == '*')
+			if IS_STAR(i, j)
 				star = i;
 			j++;
 		}
@@ -80,21 +80,21 @@ static size_t	get_n_end(void)
 	return (star);
 }
 
-static size_t	get_x_end(void)
+static int	get_br_x(int n, int x)
 {
-	size_t	i;
-	size_t	j;
-	size_t	star;
+	int	i;
+	int	j;
+	int	star;
 
 	i = 0;
 	j = 0;
 	star = 0;
-	while (j < g_f.tx)
+	while (j < x)
 	{
 		i = 0;
-		while (i < g_f.tn)
+		while (i < n)
 		{
-			if (g_f.token[i][j] == '*')
+			if IS_STAR(i, j)
 				star = j;
 			i++;
 		}
@@ -105,10 +105,10 @@ static size_t	get_x_end(void)
 
 inline void		set_token_coord(void)
 {
-	ft_bzero(&g_out, sizeof(t_out));
-	g_out.steps = g_f.n + g_f.x;
-	g_out.t_n = get_n();
-	g_out.t_x = get_x();
-	g_out.t_n_end = get_n_end();
-	g_out.t_x_end = get_x_end();
+	ft_bzero(&g_solve, sizeof(t_solve));
+	g_solve.steps = F.size_b.n + F.size_b.x;
+	g_solve.token_upper_left.n = get_ul_n(F.size_t.n, F.size_t.x);
+	g_solve.token_upper_left.x = get_ul_x(F.size_t.n, F.size_t.x);
+	g_solve.token_bottom_right.n = get_br_n(F.size_t.n, F.size_t.x);
+	g_solve.token_bottom_right.x = get_br_x(F.size_t.n, F.size_t.x);
 }
