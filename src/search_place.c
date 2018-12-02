@@ -6,14 +6,16 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/12/02 17:04:09 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 17:52:22 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/filler.h"
 
-t_f				g_f;
-t_solve			g_solve;
+#define B(n, x) g_f.board[n][x]
+
+t_f			g_f;
+t_solve		g_solve;
 
 static int	get_token_border_n(int n, int x)
 {
@@ -61,19 +63,19 @@ static int	get_token_border_x(int n, int x)
 	return (star);
 }
 
-static void		count_distance_to_enemy(int n, int x)
+static void	count_distance_to_enemy(int n, int x)
 {
 	int	i;
 	int	j;
 	int	tmp;
 
 	i = -1;
-	while (++i < N)
+	while (++i < g_f.size_b.n)
 	{
 		j = -1;
-		while (++j < X)
+		while (++j < g_f.size_b.x)
 		{
-			if ENEMY_DOT(i, j)
+			if (B(i, j) == g_f.enemy || B(i, j) == g_f.enemy + 32)
 			{
 				tmp = (ft_abs(i - n) + ft_abs(j - x));
 				if (tmp < g_solve.steps && tmp > 0)
@@ -87,13 +89,14 @@ static void		count_distance_to_enemy(int n, int x)
 	}
 }
 
-static int		check_position(int n, int x)
+static int	check_position(int n, int x)
 {
 	int		i;
 	int		j;
 	short	dot;
 
-	if (n + g_solve.border.n >= N || x + g_solve.border.x >= X)
+	if (n + g_solve.border.n >= g_f.size_b.n ||
+		x + g_solve.border.x >= g_f.size_b.x)
 		return (0);
 	dot = 0;
 	i = -1;
@@ -101,28 +104,28 @@ static int		check_position(int n, int x)
 	{
 		j = -1;
 		while (g_f.token[i][++j])
-		{
 			if (g_f.token[i][j] == '*')
 			{
-				if PLAYER_DOT(n + i, x + j)
+				if (B(n + i, x + j) == g_f.player ||
+					B(n + i, x + j) == g_f.player + 32)
 					dot++;
-				if (ENEMY_DOT(n + i, x + j) || dot > 1)
+				if (B(n + i, x + j) == g_f.enemy ||
+					B(n + i, x + j) == g_f.enemy + 32 || dot > 1)
 					return (0);
 			}
-		}
 	}
 	return (dot ? 1 : 0);
 }
 
-void			search_place()
+void		search_place(void)
 {
 	int	n;
 	int	x;
 
 	ft_bzero(&g_solve, sizeof(t_solve));
 	g_solve.steps = g_f.size_b.n + g_f.size_b.x;
-	g_solve.border.n = get_token_border_n(g_f.size_t.n, g_f.size_t.x);
-	g_solve.border.x = get_token_border_x(g_f.size_t.n, g_f.size_t.x);
+	g_solve.border.n = get_token_border_n(g_f.size_token.n, g_f.size_token.x);
+	g_solve.border.x = get_token_border_x(g_f.size_token.n, g_f.size_token.x);
 	n = 0;
 	while (g_f.board[n])
 	{

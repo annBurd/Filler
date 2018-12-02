@@ -50,11 +50,11 @@ static void	update_token(char *line)
 
 	if (g_f.token)
 		ft_arraystrfree(g_f.token);
-	g_f.size_t.n = 0;
-	g_f.size_t.x = 0;
-	g_f.token = get_array(line, &g_f.size_t.n, &g_f.size_t.x);
+	g_f.size_token.n = 0;
+	g_f.size_token.x = 0;
+	g_f.token = get_array(line, &g_f.size_token.n, &g_f.size_token.x);
 	i = 0;
-	while (i < g_f.size_t.n && get_next_line(0, &g_f.token[i]) > 0)
+	while (i < g_f.size_token.n && get_next_line(0, &g_f.token[i]) > 0)
 		i++;
 }
 
