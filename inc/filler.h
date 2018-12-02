@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/12/02 15:22:29 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 16:32:52 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@
 #define F g_f
 #define N g_f.size_b.n
 #define X g_f.size_b.x
-#define UPPER g_solve.token_u
-#define BOTTOM g_solve.token_b
-
-#define CUR_N (n + i - g_solve.token_u.n)
-#define CUR_X (x + j - g_solve.token_u.x)
 
 #define ENEMY_DOT(n, x) (g_f.board[n][x] == g_f.enemy || \
 							g_f.board[n][x] == g_f.enemy + 32)
@@ -56,8 +51,7 @@ typedef struct	s_f
 
 typedef struct	s_solve
 {
-	t_coord		token_u; //upper left dot
-	t_coord		token_b; //bottom right dot
+	t_coord		token_b;
 	int			steps;
 }				t_solve;
 

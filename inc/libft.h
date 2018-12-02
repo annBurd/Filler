@@ -61,7 +61,7 @@ char			*ft_itoa_base(intmax_t value, short base);
 int				ft_atoi_base(const char *str, short base);
 int				is_ascending_order(int *tab, int size);
 int				is_descending_order(int *tab, int size);
-size_t			ft_abs(int nbr);
+int				ft_abs(int nbr);
 
 void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
