@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/12/02 17:52:22 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 17:52:50 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	count_distance_to_enemy(int n, int x)
 	{
 		j = -1;
 		while (++j < g_f.size_b.x)
-		{
 			if (B(i, j) == g_f.enemy || B(i, j) == g_f.enemy + 32)
 			{
 				tmp = (ft_abs(i - n) + ft_abs(j - x));
@@ -85,7 +84,6 @@ static void	count_distance_to_enemy(int n, int x)
 					g_f.out.x = x;
 				}
 			}
-		}
 	}
 }
 
