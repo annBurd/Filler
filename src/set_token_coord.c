@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 20:15:53 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/29 20:56:52 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:22:29 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_ul_n(int n, int x)
 		j = 0;
 		while (j < x)
 		{
-			if IS_STAR(i, j)
+			if STAR(i, j)
 				return (i);
 			j++;
 		}
@@ -48,7 +48,7 @@ static int	get_ul_x(int n, int x)
 		i = 0;
 		while (i < n)
 		{
-			if IS_STAR(i, j)
+			if STAR(i, j)
 				return (j);
 			i++;
 		}
@@ -71,7 +71,7 @@ static int	get_br_n(int n, int x)
 		j = 0;
 		while (j < x)
 		{
-			if IS_STAR(i, j)
+			if STAR(i, j)
 				star = i;
 			j++;
 		}
@@ -94,7 +94,7 @@ static int	get_br_x(int n, int x)
 		i = 0;
 		while (i < n)
 		{
-			if IS_STAR(i, j)
+			if STAR(i, j)
 				star = j;
 			i++;
 		}
@@ -107,8 +107,8 @@ inline void		set_token_coord(void)
 {
 	ft_bzero(&g_solve, sizeof(t_solve));
 	g_solve.steps = F.size_b.n + F.size_b.x;
-	g_solve.token_ul.n = get_ul_n(F.size_t.n, F.size_t.x);
-	g_solve.token_ul.x = get_ul_x(F.size_t.n, F.size_t.x);
-	g_solve.token_br.n = get_br_n(F.size_t.n, F.size_t.x);
-	g_solve.token_br.x = get_br_x(F.size_t.n, F.size_t.x);
+	g_solve.token_u.n = get_ul_n(F.size_t.n, F.size_t.x);
+	g_solve.token_u.x = get_ul_x(F.size_t.n, F.size_t.x);
+	g_solve.token_b.n = get_br_n(F.size_t.n, F.size_t.x);
+	g_solve.token_b.x = get_br_x(F.size_t.n, F.size_t.x);
 }

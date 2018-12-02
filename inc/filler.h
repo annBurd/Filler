@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:49:01 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/12/02 14:44:47 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 15:22:29 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,20 @@
 #include "ft_printf.h"
 
 #define F g_f
-//#define OUT g_solve
+#define N g_f.size_b.n
+#define X g_f.size_b.x
+#define UPPER g_solve.token_u
+#define BOTTOM g_solve.token_b
+
+#define CUR_N (n + i - g_solve.token_u.n)
+#define CUR_X (x + j - g_solve.token_u.x)
+
 #define ENEMY_DOT(n, x) (g_f.board[n][x] == g_f.enemy || \
 							g_f.board[n][x] == g_f.enemy + 32)
 #define PLAYER_DOT(n, x) (g_f.board[n][x] == g_f.player || \
 							g_f.board[n][x] == g_f.player + 32)
-#define IS_STAR(i, j) (g_f.token[i][j] == '*')
+
+#define STAR(i, j) (g_f.token[i][j] == '*')
 
 typedef struct	s_coord
 {
@@ -48,8 +56,8 @@ typedef struct	s_f
 
 typedef struct	s_solve
 {
-	t_coord		token_ul; //upper_left
-	t_coord		token_br; //bottom_right
+	t_coord		token_u; //upper left dot
+	t_coord		token_b; //bottom right dot
 	int			steps;
 }				t_solve;
 
