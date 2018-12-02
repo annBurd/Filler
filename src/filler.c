@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/11/29 20:22:00 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 14:29:58 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,14 @@
 
 t_f			g_f;
 
-static char	**get_array(const char *line, size_t *n, size_t *x)
+static char	**get_array(char const *line, int *n, int *x)
 {
 	char	**fresh;
-	size_t	i;
 
-	i = 0;
-	while (line[i] && !ft_isdigit(line[i]))
-		i++;
-	while (line[i] && line[i] != ' ')
-		*n = *n * 10 + line[i++] - '0';
-	i++;
-	while (line[i] && line[i] != ':')
-		*x = *x * 10 + line[i++] - '0';
+	line = ft_strchr(line, ' ');
+	*n = ft_atoi(line);
+	line += ft_nbrlen(*n, 10) + 1;
+	*x = ft_atoi(line);
 	fresh = (char**)malloc(sizeof(char*) * (*n + 1));
 	fresh[*n] = 0;
 	return (fresh);
@@ -34,7 +29,7 @@ static char	**get_array(const char *line, size_t *n, size_t *x)
 
 static void	update_board(char *line)
 {
-	size_t	i;
+	int	i;
 
 	if (!g_f.board)
 	{
@@ -51,7 +46,7 @@ static void	update_board(char *line)
 
 static void	update_token(char *line)
 {
-	size_t	i;
+	int	i;
 
 	if (g_f.token)
 		ft_arraystrfree(g_f.token);
@@ -81,7 +76,7 @@ int			main(void)
 		{
 			update_token(line);
 			search_place();
-			dprintf(1, "%zu %zu\n", g_f.out_n, g_f.out_x);
+			dprintf(1, "%d %d\n", g_f.out_n, g_f.out_x);
 		}
 	}
 	ft_arraystrfree(g_f.board);
