@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:02:23 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/12/02 16:48:03 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 17:04:09 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_f				g_f;
 t_solve			g_solve;
 
-static int	get_br_n(int n, int x)
+static int	get_token_border_n(int n, int x)
 {
 	int	i;
 	int	j;
@@ -29,7 +29,7 @@ static int	get_br_n(int n, int x)
 		j = 0;
 		while (j < x)
 		{
-			if STAR(i, j)
+			if (g_f.token[i][j] == '*')
 				star = i;
 			j++;
 		}
@@ -38,7 +38,7 @@ static int	get_br_n(int n, int x)
 	return (star);
 }
 
-static int	get_br_x(int n, int x)
+static int	get_token_border_x(int n, int x)
 {
 	int	i;
 	int	j;
@@ -52,7 +52,7 @@ static int	get_br_x(int n, int x)
 		i = 0;
 		while (i < n)
 		{
-			if STAR(i, j)
+			if (g_f.token[i][j] == '*')
 				star = j;
 			i++;
 		}
@@ -79,8 +79,8 @@ static void		count_distance_to_enemy(int n, int x)
 				if (tmp < g_solve.steps && tmp > 0)
 				{
 					g_solve.steps = tmp;
-					F.out.n = n;
-					F.out.x = x;
+					g_f.out.n = n;
+					g_f.out.x = x;
 				}
 			}
 		}
@@ -93,16 +93,16 @@ static int		check_position(int n, int x)
 	int		j;
 	short	dot;
 
-	if (n + g_solve.token_b.n >= N || x + g_solve.token_b.x >= X)
+	if (n + g_solve.border.n >= N || x + g_solve.border.x >= X)
 		return (0);
 	dot = 0;
 	i = -1;
-	while (F.token[++i])
+	while (g_f.token[++i])
 	{
 		j = -1;
-		while (F.token[i][++j])
+		while (g_f.token[i][++j])
 		{
-			if (F.token[i][j] == '*')
+			if (g_f.token[i][j] == '*')
 			{
 				if PLAYER_DOT(n + i, x + j)
 					dot++;
@@ -120,14 +120,14 @@ void			search_place()
 	int	x;
 
 	ft_bzero(&g_solve, sizeof(t_solve));
-	g_solve.steps = F.size_b.n + F.size_b.x;
-	g_solve.token_b.n = get_br_n(F.size_t.n, F.size_t.x);
-	g_solve.token_b.x = get_br_x(F.size_t.n, F.size_t.x);
+	g_solve.steps = g_f.size_b.n + g_f.size_b.x;
+	g_solve.border.n = get_token_border_n(g_f.size_t.n, g_f.size_t.x);
+	g_solve.border.x = get_token_border_x(g_f.size_t.n, g_f.size_t.x);
 	n = 0;
-	while (F.board[n])
+	while (g_f.board[n])
 	{
 		x = 0;
-		while (F.board[n][x])
+		while (g_f.board[n][x])
 		{
 			if (check_position(n, x))
 				count_distance_to_enemy(n, x);

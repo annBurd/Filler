@@ -6,7 +6,7 @@
 /*   By: aburdeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 18:48:54 by aburdeni          #+#    #+#             */
-/*   Updated: 2018/12/02 15:06:12 by aburdeni         ###   ########.fr       */
+/*   Updated: 2018/12/02 17:10:35 by aburdeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,30 @@ static void	update_board(char *line)
 {
 	int	i;
 
-	if (!F.board)
+	if (!g_f.board)
 	{
 		i = 0;
-		F.board = get_array(line, &F.size_b.n, &F.size_b.x);
-		while (i < F.size_b.n)
-			F.board[i++] = ft_strnew(F.size_b.x);
+		g_f.board = get_array(line, &g_f.size_b.n, &g_f.size_b.x);
+		while (i < g_f.size_b.n)
+			g_f.board[i++] = ft_strnew(g_f.size_b.x);
 	}
 	i = 0;
 	get_next_line(0, &line);
-	while (i < F.size_b.n && get_next_line(0, &line) > 0)
-		ft_strcpy(F.board[i++], line + 4);
+	while (i < g_f.size_b.n && get_next_line(0, &line) > 0)
+		ft_strcpy(g_f.board[i++], line + 4);
 }
 
 static void	update_token(char *line)
 {
 	int	i;
 
-	if (F.token)
-		ft_arraystrfree(F.token);
-	F.size_t.n = 0;
-	F.size_t.x = 0;
-	F.token = get_array(line, &F.size_t.n, &F.size_t.x);
+	if (g_f.token)
+		ft_arraystrfree(g_f.token);
+	g_f.size_t.n = 0;
+	g_f.size_t.x = 0;
+	g_f.token = get_array(line, &g_f.size_t.n, &g_f.size_t.x);
 	i = 0;
-	while (i < F.size_t.n && get_next_line(0, &F.token[i]) > 0)
+	while (i < g_f.size_t.n && get_next_line(0, &g_f.token[i]) > 0)
 		i++;
 }
 
@@ -67,8 +67,8 @@ int			main(void)
 	{
 		if (ft_strstr(line, "exec") && ft_strstr(line, "aburdeni.filler"))
 		{
-			F.player = (char)(ft_strstr(line, "p1") ? 'O' : 'X');
-			F.enemy = (char)(F.player == 'X' ? 'O' : 'X');
+			g_f.player = (char)(ft_strstr(line, "p1") ? 'O' : 'X');
+			g_f.enemy = (char)(g_f.player == 'X' ? 'O' : 'X');
 		}
 		else if (ft_strstr(line, "Plateau"))
 			update_board(line);
@@ -76,12 +76,12 @@ int			main(void)
 		{
 			update_token(line);
 			search_place();
-			dprintf(1, "%d %d\n", F.out.n, F.out.x);
+			dprintf(1, "%d %d\n", g_f.out.n, g_f.out.x);
 		}
 	}
-	ft_arraystrfree(F.board);
-	if (F.token)
-		ft_arraystrfree(F.token);
+	ft_arraystrfree(g_f.board);
+	if (g_f.token)
+		ft_arraystrfree(g_f.token);
 	free(line);
 	return (0);
 }
