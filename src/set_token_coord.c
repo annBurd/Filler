@@ -107,8 +107,8 @@ inline void		set_token_coord(void)
 {
 	ft_bzero(&g_solve, sizeof(t_solve));
 	g_solve.steps = F.size_b.n + F.size_b.x;
-	g_solve.token_upper_left.n = get_ul_n(F.size_t.n, F.size_t.x);
-	g_solve.token_upper_left.x = get_ul_x(F.size_t.n, F.size_t.x);
-	g_solve.token_bottom_right.n = get_br_n(F.size_t.n, F.size_t.x);
-	g_solve.token_bottom_right.x = get_br_x(F.size_t.n, F.size_t.x);
+	g_solve.token_ul.n = get_ul_n(F.size_t.n, F.size_t.x);
+	g_solve.token_ul.x = get_ul_x(F.size_t.n, F.size_t.x);
+	g_solve.token_br.n = get_br_n(F.size_t.n, F.size_t.x);
+	g_solve.token_br.x = get_br_x(F.size_t.n, F.size_t.x);
 }

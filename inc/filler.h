@@ -48,8 +48,8 @@ typedef struct	s_f
 
 typedef struct	s_solve
 {
-	t_coord		token_upper_left;
-	t_coord		token_bottom_right;
+	t_coord		token_ul; //upper_left
+	t_coord		token_br; //bottom_right
 	int			steps;
 }				t_solve;
 
